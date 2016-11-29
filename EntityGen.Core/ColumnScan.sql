@@ -14,7 +14,7 @@ SELECT DISTINCT
 	col.name as ColumnName,
 	col.is_nullable as Nullable,
 	dt.name as DataType,
-	CAST(IIF(EXISTS(SELECT TOP 1 1 FROM PK WHERE t.object_id = PK.ObjectId AND col.name = PK.ColumnName), 1, 0) AS BIT) as PK
+CAST(CASE WHEN EXISTS(SELECT TOP 1 1 FROM PK WHERE t.object_id = PK.ObjectId AND col.name = PK.ColumnName) THEN 1 ELSE 0 END AS BIT) as PK
 FROM sys.tables t
 JOIN sys.columns col ON t.object_id = col.object_id
 JOIN sys.types dt ON col.system_type_id = dt.system_type_id

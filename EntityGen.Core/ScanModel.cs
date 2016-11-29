@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityGenerator
+namespace EntityGen.Core
 {
     public class ScanModel
     {
@@ -18,6 +18,6 @@ namespace EntityGenerator
 
         public string DataType { set; get; }
 
-        public bool PK { set; get; }
+        public bool IsPrimaryKey { set; get; }
     }
 }

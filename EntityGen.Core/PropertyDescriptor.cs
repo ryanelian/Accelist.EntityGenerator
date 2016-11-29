@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityGenerator
+namespace EntityGen.Core
 {
     public class PropertyDescriptor
     {
@@ -12,6 +12,6 @@ namespace EntityGenerator
 
         public string Name { set; get; }
 
-        public bool PrimaryKey { set; get; }
+        public bool IsPrimaryKey { set; get; }
     }
 }

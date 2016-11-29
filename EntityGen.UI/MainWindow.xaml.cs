@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.IO;
 using EntityGen.Core;
+using FolderDialog = System.Windows.Forms.FolderBrowserDialog;
 
 namespace EntityGen.UI
 {
@@ -30,8 +31,8 @@ namespace EntityGen.UI
         {
             InitializeComponent();
 
-            this.ConnectionStringTextBox.Text = @"Data Source=DOCTORLOVE\SQL2016;Initial Catalog=TANGO;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            this.DbContextNameTextBox.Text = "TangoDb";
+            this.ConnectionStringTextBox.Text = @"Data Source=DOCTORLOVE\SQL2016;Initial Catalog=TANGO;Integrated Security=True;";
+            this.DbContextNameTextBox.Text = "TangoDbContext";
             this.NamespaceTextBox.Text = "TAM.TANGO.Entities";
             this.ExportPathTextBox.Text = "Entities";
         }
@@ -113,7 +114,10 @@ namespace EntityGen.UI
         /// <param name="e"></param>
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var dialog = new FolderDialog();
+            dialog.ShowDialog();
+
+            this.ExportPathTextBox.Text = dialog.SelectedPath;
         }
     }
 }

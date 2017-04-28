@@ -9,16 +9,17 @@
 	WHERE ind.is_primary_key = 1
 )
 SELECT DISTINCT
-	t.object_id as ObjectId,
+	sch.name as SchemaName,
 	t.name as TableName,
 	col.name as ColumnName,
 	col.is_nullable as Nullable,
 	dt.name as DataType,
-CAST(CASE WHEN EXISTS(SELECT TOP 1 1 FROM PK WHERE t.object_id = PK.ObjectId AND col.name = PK.ColumnName) THEN 1 ELSE 0 END AS BIT) as PK
+	CAST(CASE WHEN EXISTS(SELECT TOP 1 1 FROM PK WHERE t.object_id = PK.ObjectId AND col.name = PK.ColumnName) THEN 1 ELSE 0 END AS BIT) as IsPrimaryKey
 FROM sys.tables t
+JOIN sys.schemas sch ON t.schema_id = sch.schema_id
 JOIN sys.columns col ON t.object_id = col.object_id
 JOIN sys.types dt ON col.system_type_id = dt.system_type_id
 WHERE
 	t.is_ms_shipped = 0
 	AND NOT (t.name = 'sysdiagrams')
-ORDER BY t.object_id, col.name
+ORDER BY t.name, col.name

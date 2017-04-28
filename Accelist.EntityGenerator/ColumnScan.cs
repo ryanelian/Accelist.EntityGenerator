@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityGen.Core
+namespace Accelist.EntityGenerator
 {
-    public class ScanModel
+    public class ColumnScan
     {
-        public int ObjectId { set; get; }
+        public string SchemaName { set; get; }
 
         public string TableName { set; get; }
 

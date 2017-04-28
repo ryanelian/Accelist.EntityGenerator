@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Collections.Specialized;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -114,7 +116,7 @@ namespace Accelist.EntityGenerator.Wpf
                 ProjectNamespace = NamespaceInput.Text.Trim(),
                 ExportToFolder = FolderInput.Text.Trim(),
             });
-            MainWindowControl_Loaded(sender, e);
+            RefreshConfigurationList();
         }
 
         public bool ValidateInputs()
@@ -171,13 +173,23 @@ namespace Accelist.EntityGenerator.Wpf
 
         private void MainWindowControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.ConfigurationList.ItemsSource = SavedConfigurations.FindAll();
             this.ConfigurationList.DisplayMemberPath = nameof(SavedConfiguration.Name);
             this.ConfigurationList.SelectedValuePath = nameof(SavedConfiguration.Id);
+            // Apparently if you pre-set values in XAML, it'll run before all form controls are ready! BAD!
+            this.FolderInput.Text = "Entities";
+            FolderCheck();
+            RefreshConfigurationList();
         }
 
         private void ConfigurationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (ConfigurationList == null)
+            {
+                return;
+            }
+
+            EraseConfigurationButton.IsEnabled = ConfigurationList.SelectedItem != null;
+
             if (ConfigurationList.SelectedItem == null)
             {
                 return;
@@ -190,6 +202,50 @@ namespace Accelist.EntityGenerator.Wpf
             DbContextInput.Text = item.DbContextName;
             NamespaceInput.Text = item.ProjectNamespace;
             FolderInput.Text = item.ExportToFolder;
+        }
+
+        private void RefreshConfigurationList()
+        {
+            this.ConfigurationList.ItemsSource = SavedConfigurations.FindAll();
+        }
+
+        private void OpenFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            var path = System.IO.Path.GetFullPath(FolderInput.Text);
+            Process.Start("explorer.exe", path);
+        }
+
+        private void CopyFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            var path = System.IO.Path.GetFullPath(FolderInput.Text);
+            var files = Directory.EnumerateFiles(path);
+            var c = new StringCollection();
+            foreach (var file in files)
+            {
+                c.Add(file);
+            }
+            Clipboard.SetFileDropList(c);
+        }
+
+        private void EraseConfigurationButton_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (SavedConfiguration)ConfigurationList.SelectedItem;
+
+            SavedConfigurations.Delete(Q => Q.Id == item.Id);
+            RefreshConfigurationList();
+        }
+
+        private void FolderInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            FolderCheck();
+        }
+
+        private bool FolderCheck()
+        {
+            var exist = Directory.Exists(FolderInput.Text);
+            OpenFolderButton.IsEnabled = exist;
+            CopyFileButton.IsEnabled = exist;
+            return exist;
         }
     }
 }

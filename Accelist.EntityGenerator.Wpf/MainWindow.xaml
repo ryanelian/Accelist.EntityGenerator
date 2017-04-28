@@ -7,21 +7,24 @@
         mc:Ignorable="d"
         Title="Accelist.EntityGenerator" Height="600" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Loaded="MainWindowControl_Loaded">
     <Grid>
-        <ListBox x:Name="ConfigurationList" HorizontalAlignment="Left" Height="288" Margin="10,236,0,0" VerticalAlignment="Top" Width="774" SelectionChanged="ConfigurationList_SelectionChanged"/>
-        <Label x:Name="ConnectionStringLabel" Content="Connection String&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="32"/>
-        <TextBox x:Name="ConnectionStringInput" HorizontalAlignment="Left" Height="32" Margin="151,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="633" VerticalContentAlignment="Center"/>
-        <Label x:Name="NamespaceLabel" Content="Project Namespace&#xA;" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="32"/>
-        <TextBox x:Name="NamespaceInput" HorizontalAlignment="Left" Height="32" Margin="151,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="633" VerticalContentAlignment="Center"/>
-        <Label x:Name="DbContextLabel" Content="DbContext Name&#xA;" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="32"/>
-        <TextBox x:Name="DbContextInput" HorizontalAlignment="Left" Height="32" Margin="151,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="633" VerticalContentAlignment="Center"/>
-        <Label x:Name="FolderLabel" Content="Export to Folder&#xA;" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="32"/>
-        <TextBox x:Name="FolderInput" HorizontalAlignment="Left" Height="32" Margin="151,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="553" VerticalContentAlignment="Center" Text="Entities"/>
-        <Button x:Name="GenerateButton" Content="Generate!" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="774" Height="36" Click="GenerateButton_Click"/>
-        <Button x:Name="ConfigurationSaveButton" Content="Save" HorizontalAlignment="Left" Margin="709,529,0,0" VerticalAlignment="Top" Width="75" Height="32" Click="ConfigurationSaveButton_Click"/>
-        <TextBox x:Name="ConfigurationNameInput" HorizontalAlignment="Left" Height="32" Margin="151,529,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="553" VerticalContentAlignment="Center"/>
-        <Label x:Name="ConfigurationLabel" Content="Configuration Name&#xA;" HorizontalAlignment="Left" Margin="10,529,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="32"/>
-        <Button x:Name="FolderButton" Content="Browse" HorizontalAlignment="Left" Margin="709,121,0,0" VerticalAlignment="Top" Width="75" Height="32" Click="FolderButton_Click"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="774"><Run Text="If namespace is set to MyCompany.MyProject, then the namespace of the entity classes will become MyCompany.MyProject.Entities."/><LineBreak/><Run Text="If folder parameter input is not a full system path, it will be evaluated as a relative path against this application executable."/></TextBlock>
+        <ListBox x:Name="ConfigurationList" HorizontalAlignment="Left" Height="253" Margin="10,275,0,0" VerticalAlignment="Top" Width="774" SelectionChanged="ConfigurationList_SelectionChanged"/>
+        <Label x:Name="ConnectionStringLabel" Content="Connection String&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="28"/>
+        <TextBox x:Name="ConnectionStringInput" HorizontalAlignment="Left" Height="56" Margin="151,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="633"/>
+        <Label x:Name="NamespaceLabel" Content="Project Namespace&#xA;" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="28"/>
+        <TextBox x:Name="NamespaceInput" HorizontalAlignment="Left" Height="28" Margin="151,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="633" VerticalContentAlignment="Center"/>
+        <Label x:Name="DbContextLabel" Content="DbContext Name&#xA;" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="28"/>
+        <TextBox x:Name="DbContextInput" HorizontalAlignment="Left" Height="28" Margin="151,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="633" VerticalContentAlignment="Center"/>
+        <Label x:Name="FolderLabel" Content="Export to Folder&#xA;" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="28"/>
+        <TextBox x:Name="FolderInput" HorizontalAlignment="Left" Height="28" Margin="151,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="393" VerticalContentAlignment="Center" TextChanged="FolderInput_TextChanged"/>
+        <Button x:Name="GenerateButton" Content="Generate!" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Width="774" Height="36" Click="GenerateButton_Click"/>
+        <Button x:Name="ConfigurationSaveButton" Content="Save" HorizontalAlignment="Left" Margin="629,533,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="ConfigurationSaveButton_Click"/>
+        <TextBox x:Name="ConfigurationNameInput" HorizontalAlignment="Left" Height="28" Margin="133,534,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="491" VerticalContentAlignment="Center"/>
+        <Label x:Name="ConfigurationLabel" Content="Configuration Name&#xA;" HorizontalAlignment="Left" Margin="10,533,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="28"/>
+        <Button x:Name="FolderButton" Content="Select" HorizontalAlignment="Left" Margin="549,137,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="FolderButton_Click"/>
+        <TextBlock x:Name="NoteText" HorizontalAlignment="Left" Margin="10,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="774"><Run Text="If namespace is set to MyCompany.MyProject, then the namespace of the entity classes will become MyCompany.MyProject.Entities."/><LineBreak/><Run Text="If folder parameter input is not a full system path, it will be evaluated as a relative path against this application executable."/></TextBlock>
+        <Button x:Name="CopyFileButton" Content="Copy Files" HorizontalAlignment="Left" Margin="709,137,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="CopyFileButton_Click" RenderTransformOrigin="0.511,0.485" IsEnabled="False"/>
+        <Button x:Name="OpenFolderButton" Content="Open" HorizontalAlignment="Left" Margin="629,137,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="OpenFolderButton_Click" IsEnabled="False"/>
+        <Button x:Name="EraseConfigurationButton" Content="Erase" HorizontalAlignment="Left" Margin="709,533,0,0" VerticalAlignment="Top" Width="75" Height="28" IsEnabled="False" Click="EraseConfigurationButton_Click"/>
 
     </Grid>
 </Window>

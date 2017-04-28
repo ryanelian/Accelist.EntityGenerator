@@ -1,6 +1,6 @@
 ## Accelist.IdentityGenerator
 
-> The official .NET development tool of Accelist Technology for cleanly generating Entity Framework Core's Entity Models from an existing SQL Server database. (Entity Framework Core stand-alone Reverse Engineering tool and API) 
+> The official Accelist Technology .NET development tool for cleanly generating Entity Framework Core classes from an existing SQL Server database. (Entity Framework Core stand-alone Reverse Engineering tool and API)
 
 ![WPF Application Screenshot](https://raw.githubusercontent.com/ryanelian/Accelist.EntityGenerator/master/screenshot.PNG)
 

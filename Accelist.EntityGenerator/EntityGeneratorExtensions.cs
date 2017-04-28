@@ -75,7 +75,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace {projectNamespace}
+namespace {projectNamespace}.{EntityGenerator.EntitiesFolderName}
 {{
     public class {dbContextName} : DbContext
     {{

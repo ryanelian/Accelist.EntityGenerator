@@ -64,8 +64,9 @@ namespace Accelist.EntityGenerator
                             typings.Add(new SqlType("money", false), typeof(decimal));
                             typings.Add(new SqlType("money", true), typeof(decimal?));
 
-                            typings.Add(new SqlType("real", false), typeof(double)); // float(24)
-                            typings.Add(new SqlType("real", true), typeof(double?)); // float(24)
+                            typings.Add(new SqlType("real", false), typeof(float)); // float(24)
+                            typings.Add(new SqlType("real", true), typeof(float?)); // float(24)
+
                             typings.Add(new SqlType("float", false), typeof(double));
                             typings.Add(new SqlType("float", true), typeof(double?));
 
@@ -123,6 +124,8 @@ namespace Accelist.EntityGenerator
                             renders.Add(typeof(bool?), "bool?");
                             renders.Add(typeof(decimal), "decimal");
                             renders.Add(typeof(decimal?), "decimal?");
+                            renders.Add(typeof(float), "float");
+                            renders.Add(typeof(float?), "float?");
                             renders.Add(typeof(double), "double");
                             renders.Add(typeof(double?), "double?");
                             renders.Add(typeof(string), "string");

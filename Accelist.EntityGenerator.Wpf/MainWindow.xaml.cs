@@ -94,6 +94,7 @@ namespace Accelist.EntityGenerator.Wpf
             if (string.IsNullOrWhiteSpace(ConfigurationNameInput.Text))
             {
                 MessageBox.Show("Configuration name input must not be empty!", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
             var data = SavedConfigurations.FindOne(Q => Q.Name == this.ConfigurationNameInput.Text);

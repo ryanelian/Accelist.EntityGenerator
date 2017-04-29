@@ -53,7 +53,7 @@ namespace Accelist.EntityGenerator
                     entity.Properties.Add(new EntityProperty
                     {
                         Name = column.ColumnName,
-                        DataType = EntityGenerator.Typings.Translate(column.DataType.ToLower(), column.Nullable),
+                        DataType = EntityGenerator.TypeMapper.Translate(column.DataType.ToLower(), column.Nullable),
                         IsPrimaryKey = column.IsPrimaryKey,
                     });
                 }
@@ -124,7 +124,7 @@ namespace {projectNamespace}.{EntityGenerator.EntitiesFolderName}
             // We need the entity properties to be ordered, to minimize Git changes after each Entity Generation.
             var lines = this.Properties.OrderBy(Q => Q.Name).Select(property =>
             {
-                var s = $"        public {EntityGenerator.Renders[property.DataType]} {property.Name} {{ get; set; }}";
+                var s = $"        public {EntityGenerator.TypeStrings[property.DataType]} {property.Name} {{ get; set; }}";
                 if (singleKey && property.IsPrimaryKey)
                 {
                     s = "        [Key]\r\n" + s;

@@ -16,141 +16,29 @@ namespace Accelist.EntityGenerator
     /// </summary>
     public class EntityGenerator
     {
-        private static SqlTypeDictionary _Typings;
-        private static object _TypingsLock = new object();
-
-        private static TypeStringDictionary _Renders;
-        private static object _RendersLock = new object();
-
-        public static SqlTypeDictionary Typings
-        {
-            get
-            {
-                if (_Typings == null)
-                {
-                    lock (_TypingsLock)
-                    {
-                        if (_Typings == null)
-                        {
-                            var typings = new Dictionary<SqlType, Type>();
-
-                            typings.Add(new SqlType("varchar", false), typeof(string));
-                            typings.Add(new SqlType("varchar", true), typeof(string));
-                            typings.Add(new SqlType("char", false), typeof(string));
-                            typings.Add(new SqlType("char", true), typeof(string));
-                            typings.Add(new SqlType("nvarchar", false), typeof(string));
-                            typings.Add(new SqlType("nvarchar", true), typeof(string));
-                            typings.Add(new SqlType("nchar", false), typeof(string));
-                            typings.Add(new SqlType("nchar", true), typeof(string));
-
-                            typings.Add(new SqlType("bigint", false), typeof(long));
-                            typings.Add(new SqlType("bigint", true), typeof(long?));
-
-                            typings.Add(new SqlType("int", false), typeof(int));
-                            typings.Add(new SqlType("int", true), typeof(int?));
-
-                            typings.Add(new SqlType("smallint", false), typeof(short));
-                            typings.Add(new SqlType("smallint", true), typeof(short?));
-
-                            typings.Add(new SqlType("tinyint", false), typeof(byte));
-                            typings.Add(new SqlType("tinyint", true), typeof(byte?));
-
-                            typings.Add(new SqlType("numeric", false), typeof(decimal));
-                            typings.Add(new SqlType("numeric", true), typeof(decimal?));
-                            typings.Add(new SqlType("decimal", false), typeof(decimal));
-                            typings.Add(new SqlType("decimal", true), typeof(decimal?));
-                            typings.Add(new SqlType("smallmoney", false), typeof(decimal));
-                            typings.Add(new SqlType("smallmoney", true), typeof(decimal?));
-                            typings.Add(new SqlType("money", false), typeof(decimal));
-                            typings.Add(new SqlType("money", true), typeof(decimal?));
-
-                            typings.Add(new SqlType("real", false), typeof(float)); // float(24)
-                            typings.Add(new SqlType("real", true), typeof(float?)); // float(24)
-
-                            typings.Add(new SqlType("float", false), typeof(double));
-                            typings.Add(new SqlType("float", true), typeof(double?));
-
-                            typings.Add(new SqlType("bit", false), typeof(bool));
-                            typings.Add(new SqlType("bit", true), typeof(bool?));
-
-                            typings.Add(new SqlType("uniqueidentifier", false), typeof(Guid));
-                            typings.Add(new SqlType("uniqueidentifier", true), typeof(Guid?));
-
-                            typings.Add(new SqlType("binary", false), typeof(byte[]));
-                            typings.Add(new SqlType("binary", true), typeof(byte[]));
-                            typings.Add(new SqlType("varbinary", false), typeof(byte[]));
-                            typings.Add(new SqlType("varbinary", true), typeof(byte[]));
-
-                            typings.Add(new SqlType("smalldatetime", false), typeof(DateTime));
-                            typings.Add(new SqlType("smalldatetime", true), typeof(DateTime?));
-                            typings.Add(new SqlType("datetime", false), typeof(DateTime));
-                            typings.Add(new SqlType("datetime", true), typeof(DateTime?));
-                            typings.Add(new SqlType("datetime2", false), typeof(DateTime));
-                            typings.Add(new SqlType("datetime2", true), typeof(DateTime?));
-
-                            typings.Add(new SqlType("time", false), typeof(TimeSpan));
-                            typings.Add(new SqlType("time", true), typeof(TimeSpan?));
-
-                            // Unmapped: DATETIMEOFFSET, ROWVERSION, XML
-
-                            _Typings = new SqlTypeDictionary(typings);
-                        }
-                    }
-                }
-
-                return _Typings;
-            }
-        }
-
-        public static TypeStringDictionary Renders
-        {
-            get
-            {
-                if (_Renders == null)
-                {
-                    lock (_RendersLock)
-                    {
-                        if (_Renders == null)
-                        {
-                            var renders = new Dictionary<Type, string>();
-
-                            renders.Add(typeof(long), "long");
-                            renders.Add(typeof(long?), "long?");
-                            renders.Add(typeof(int), "int");
-                            renders.Add(typeof(int?), "int?");
-                            renders.Add(typeof(short), "short");
-                            renders.Add(typeof(short?), "short?");
-                            renders.Add(typeof(byte), "byte");
-                            renders.Add(typeof(byte?), "byte?");
-                            renders.Add(typeof(bool), "bool");
-                            renders.Add(typeof(bool?), "bool?");
-                            renders.Add(typeof(decimal), "decimal");
-                            renders.Add(typeof(decimal?), "decimal?");
-                            renders.Add(typeof(float), "float");
-                            renders.Add(typeof(float?), "float?");
-                            renders.Add(typeof(double), "double");
-                            renders.Add(typeof(double?), "double?");
-                            renders.Add(typeof(string), "string");
-                            renders.Add(typeof(byte[]), "byte[]");
-                            renders.Add(typeof(Guid), "Guid");
-                            renders.Add(typeof(Guid?), "Guid?");
-                            renders.Add(typeof(DateTime), "DateTime");
-                            renders.Add(typeof(DateTime?), "DateTime?");
-                            renders.Add(typeof(TimeSpan), "TimeSpan");
-                            renders.Add(typeof(TimeSpan?), "TimeSpan?");
-
-                            _Renders = new TypeStringDictionary(renders);
-                        }
-                    }
-                }
-
-                return _Renders;
-            }
-        }
-
-        public static string EntitiesFolderName => "Entities";
-
         private readonly SqlConnection DB;
+
+        private static SqlTypeDictionary _Typings;
+        private static TypeStringDictionary _TypeStrings;
+        private static string _EntitiesFolderName;
+
+        public static SqlTypeDictionary TypeMapper
+        {
+            get => _Typings ?? SqlTypeDictionary.Standard;
+            set => _Typings = value;
+        }
+
+        public static TypeStringDictionary TypeStrings
+        {
+            get => _TypeStrings ?? TypeStringDictionary.Standard;
+            set => _TypeStrings = value;
+        }
+
+        public static string EntitiesFolderName
+        {
+            get => _EntitiesFolderName ?? "Entities";
+            set => _EntitiesFolderName = value;
+        }
 
         /// <summary>
         /// Constructs a new GeneratorService using a provided SQL Server database.

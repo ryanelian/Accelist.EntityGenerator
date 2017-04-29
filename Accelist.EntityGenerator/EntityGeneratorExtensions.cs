@@ -17,25 +17,11 @@ namespace Accelist.EntityGenerator
         /// <returns></returns>
         public static List<Entity> ToEntities(this List<ColumnScan> scans)
         {
-            var bag = new ConcurrentBag<Entity>();
-
-            var entities = scans.GroupBy(Q => Q.TableName);
-            Parallel.ForEach(entities, entity =>
-            {
-                var c = new Entity();
-                c.Name = entity.First().TableName;
-                c.Schema = entity.First().SchemaName;
-                c.Properties = entity.Select(property => new EntityProperty
-                {
-                    Name = property.ColumnName,
-                    DataType = EntityGenerator.Typings.Translate(property.DataType, property.Nullable),
-                    IsPrimaryKey = property.IsPrimaryKey,
-                }).ToList();
-
-                bag.Add(c);
-            });
-
-            return bag.OrderBy(Q => Q.Name).ToList();
+            return scans.AsParallel()
+                .GroupBy(Q => Q.TableName)
+                .Select(table => Entity.CreateFromColumns(table))
+                .OrderBy(Q => Q.Name)
+                .ToList();
         }
 
         /// <summary>

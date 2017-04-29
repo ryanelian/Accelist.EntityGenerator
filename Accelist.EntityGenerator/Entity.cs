@@ -37,6 +37,41 @@ namespace Accelist.EntityGenerator
             }});";
         }
 
+        public static Entity CreateFromColumns(IEnumerable<ColumnScan> columns)
+        {
+            var entity = new Entity();
+            entity.Name = columns.First().TableName;
+            entity.Schema = columns.First().SchemaName;
+            entity.Properties = new List<EntityProperty>();
+            
+            var exs = new List<KeyNotFoundException>();
+            foreach (var column in columns)
+            {
+                try
+                {
+                    entity.Properties.Add(new EntityProperty
+                    {
+                        Name = column.ColumnName,
+                        DataType = EntityGenerator.Typings.Translate(column.DataType, column.Nullable),
+                        IsPrimaryKey = column.IsPrimaryKey,
+                    });
+                }
+                catch (KeyNotFoundException)
+                {
+                    var n = column.Nullable ? "NULL" : "NOT NULL";
+                    var s = $"Table {entity.Schema}.{entity.Name} has an unsupported column data types: {column.DataType.ToUpper()} {n}";
+                    exs.Add(new KeyNotFoundException(s));
+                }
+            }
+
+            if (exs.Any())
+            {
+                throw new AggregateException(exs);
+            }
+
+            return entity;
+        }
+
         /// <summary>
         /// Convert this object into a DbSet entry for Entity Framework Core.
         /// </summary>
@@ -53,11 +88,10 @@ namespace Accelist.EntityGenerator
         /// <returns></returns>
         public string Serialize(string projectNamespace)
         {
-            //using System.ComponentModel.DataAnnotations.Schema;
-
             return $@"using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;

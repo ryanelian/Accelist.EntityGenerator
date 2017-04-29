@@ -13,7 +13,7 @@ SELECT DISTINCT
 	t.name as TableName,
 	col.name as ColumnName,
 	col.is_nullable as Nullable,
-	dt.name as DataType,
+	LOWER(dt.name) as DataType,
 	CAST(CASE WHEN EXISTS(SELECT TOP 1 1 FROM PK WHERE t.object_id = PK.ObjectId AND col.name = PK.ColumnName) THEN 1 ELSE 0 END AS BIT) as IsPrimaryKey
 FROM sys.tables t
 JOIN sys.schemas sch ON t.schema_id = sch.schema_id

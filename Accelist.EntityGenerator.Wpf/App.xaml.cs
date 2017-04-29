@@ -36,15 +36,14 @@ namespace Accelist.EntityGenerator.Wpf
             sb.AppendLine(ex.Message);
             sb.Append(ex.StackTrace);
 
-            if (ex is AggregateException)
+            if (ex is AggregateException ag)
             {
-                var ag = (AggregateException)ex;
                 var exs = ag.Flatten().InnerExceptions;
                 for (var i = 0; i < exs.Count; i++)
                 {
                     var exi = exs[i];
 
-                    sb.Append("\n\n");
+                    sb.Append("\r\n\r\n");
                     sb.Append($"---> (Inner Exception #{i}) ");
                     sb.Append(exi.GetType().ToString());
                     sb.Append(": ");

@@ -22,4 +22,5 @@ JOIN sys.types dt ON col.system_type_id = dt.system_type_id
 WHERE
 	t.is_ms_shipped = 0
 	AND NOT (t.name = 'sysdiagrams')
+	AND NOT (dt.name = 'sysname')
 ORDER BY t.name, col.name

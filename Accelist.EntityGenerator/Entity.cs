@@ -45,6 +45,7 @@ namespace Accelist.EntityGenerator
             entity.Properties = new List<EntityProperty>();
             
             var exs = new List<KeyNotFoundException>();
+
             foreach (var column in columns)
             {
                 try
@@ -120,7 +121,8 @@ namespace {projectNamespace}.{EntityGenerator.EntitiesFolderName}
         {
             var singleKey = this.Properties.Count(Q => Q.IsPrimaryKey) == 1;
 
-            var lines = this.Properties.Select(property =>
+            // We need the entity properties to be ordered, to minimize Git changes after each Entity Generation.
+            var lines = this.Properties.OrderBy(Q => Q.Name).Select(property =>
             {
                 var s = $"        public {EntityGenerator.Renders[property.DataType]} {property.Name} {{ get; set; }}";
                 if (singleKey && property.IsPrimaryKey)

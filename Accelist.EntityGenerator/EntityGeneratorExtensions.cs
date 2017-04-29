@@ -20,41 +20,23 @@ namespace Accelist.EntityGenerator
             return scans.AsParallel()
                 .GroupBy(Q => Q.TableName)
                 .Select(table => Entity.CreateFromColumns(table))
-                .OrderBy(Q => Q.Name)
                 .ToList();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="entities"></param>
-        /// <returns></returns>
-        public static string GenerateCompositeKeys(this List<Entity> entities)
-        {
-            var lines = entities.Where(entity => entity.Properties.Count(property => property.IsPrimaryKey) > 1)
-                .Select(entity => entity.WriteDbContextPrimaryKeys())
-                .ToList();
-
-            return string.Join("\r\n\r\n", lines);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="entities"></param>
-        /// <returns></returns>
-        public static string GenerateDbSets(this List<Entity> entities)
-        {
-            var lines = entities
-                .Select(entity => entity.WriteDbSet())
-                .OrderBy(Q => Q)
-                .ToList();
-
-            return string.Join("\r\n\r\n", lines);
         }
 
         public static string ToDbContext(this List<Entity> entities, string projectNamespace, string dbContextName)
         {
+            // We need Composite Keys and DbSets to be ordered, to minimize Git changes after each Entity Generation.
+            var orderedEntities = entities.OrderBy(Q => Q.Name).ToList();
+
+            var compositeKeyLines = orderedEntities
+                .Where(entity => entity.Properties.Count(property => property.IsPrimaryKey) > 1)
+                .Select(entity => entity.WriteDbContextPrimaryKeys());
+
+            var dbSetLines = orderedEntities.Select(entity => entity.WriteDbSet());
+
+            var compositeKeys = string.Join("\r\n\r\n", compositeKeyLines);
+            var dbSets = string.Join("\r\n\r\n", dbSetLines);
+
             return $@"using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -69,10 +51,10 @@ namespace {projectNamespace}.{EntityGenerator.EntitiesFolderName}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {{
-{entities.GenerateCompositeKeys()}
+{compositeKeys}
         }}
 
-{entities.GenerateDbSets()}
+{dbSets}
     }}
 }}";
         }

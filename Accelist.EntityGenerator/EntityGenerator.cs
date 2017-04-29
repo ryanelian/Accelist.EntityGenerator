@@ -76,6 +76,8 @@ namespace Accelist.EntityGenerator
                             typings.Add(new SqlType("uniqueidentifier", false), typeof(Guid));
                             typings.Add(new SqlType("uniqueidentifier", true), typeof(Guid?));
 
+                            typings.Add(new SqlType("binary", false), typeof(byte[]));
+                            typings.Add(new SqlType("binary", true), typeof(byte[]));
                             typings.Add(new SqlType("varbinary", false), typeof(byte[]));
                             typings.Add(new SqlType("varbinary", true), typeof(byte[]));
 

@@ -53,7 +53,7 @@ namespace Accelist.EntityGenerator
                     entity.Properties.Add(new EntityProperty
                     {
                         Name = column.ColumnName,
-                        DataType = EntityGenerator.Typings.Translate(column.DataType, column.Nullable),
+                        DataType = EntityGenerator.Typings.Translate(column.DataType.ToLower(), column.Nullable),
                         IsPrimaryKey = column.IsPrimaryKey,
                     });
                 }

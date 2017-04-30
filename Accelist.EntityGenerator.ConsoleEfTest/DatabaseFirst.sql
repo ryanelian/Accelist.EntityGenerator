@@ -9,6 +9,7 @@
 	TheXml XML NOT NULL,
 
 	TheBigInt BIGINT NOT NULL,
+	TheInt INT NOT NULL,
 	TheSmallInt SMALLINT NOT NULL,
 	TheTinyInt TINYINT NOT NULL,
 	TheBit BIT NOT NULL,
@@ -52,6 +53,7 @@ CREATE TABLE CustomSchema.TheNullable
 	TheXml XML NULL,
 
 	TheBigInt BIGINT NULL,
+	TheInt INT NULL,
 	TheSmallInt SMALLINT NULL,
 	TheTinyInt TINYINT NULL,
 	TheBit BIT NULL,

@@ -11,13 +11,15 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Services
 {
     public class TestingService
     {
-        public TestingService(TestDbContext testDbContext) {
-            this.TestDbContext = testDbContext;
+        private readonly TestDbContext DB;
+
+        public TestingService(TestDbContext db)
+        {
+            this.DB = db;
         }
 
-        private readonly TestDbContext TestDbContext;
-
-        public void InsertTest() {
+        public async Task Insert()
+        {
             var randomBytes = new Random();
             var bytes = new byte[8];
             randomBytes.NextBytes(bytes);
@@ -35,6 +37,7 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Services
                 TheDecimal = 10155.61M,
                 TheFloat = 203941.2145,
                 TheGuid = Guid.NewGuid(),
+                TheInt = int.MaxValue,
                 TheMoney = 175000.50M,
                 TheNChar = "TheNChar",
                 TheNumeric = 12345.6789M,
@@ -50,11 +53,12 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Services
                 TheXml = "<Test>Hello World!</Test>"
             };
 
-            this.TestDbContext.Test.Add(newTest);
-            this.TestDbContext.SaveChanges();
+            DB.Test.Add(newTest);
+            await DB.SaveChangesAsync();
         }
 
-        public void InsertTheNullable() {
+        public async Task InsertNulls()
+        {
             var newTheNullable = new TheNullable
             {
                 TheBigInt = null,
@@ -68,6 +72,7 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Services
                 TheDecimal = null,
                 TheFloat = null,
                 TheGuid = null,
+                TheInt = null,
                 TheMoney = null,
                 TheNChar = null,
                 TheNumeric = null,
@@ -83,20 +88,14 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Services
                 TheXml = null
             };
 
-            this.TestDbContext.TheNullable.Add(newTheNullable);
-            this.TestDbContext.SaveChanges();
+            DB.TheNullable.Add(newTheNullable);
+            await DB.SaveChangesAsync();
         }
 
-        public Test SelectTest()
+        public async Task SelectAll()
         {
-            var test = this.TestDbContext.Test.FirstOrDefault();
-            return test;
-        }
-
-        public TheNullable SelectTheNullable()
-        {
-            var theNullable = this.TestDbContext.TheNullable.FirstOrDefault();
-            return theNullable;
+            var test = await DB.Test.ToListAsync();
+            var nulls = await DB.TheNullable.ToListAsync();
         }
     }
 }

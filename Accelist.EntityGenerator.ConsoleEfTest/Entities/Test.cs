@@ -35,6 +35,8 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Entities
 
         public Guid TheGuid { get; set; }
 
+        public int TheInt { get; set; }
+
         public decimal TheMoney { get; set; }
 
         public string TheNChar { get; set; }

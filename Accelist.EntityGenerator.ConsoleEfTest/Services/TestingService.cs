@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Accelist.EntityGenerator.ConsoleEfTest.Services
 {
-    public class DbService
+    public class TestingService
     {
-        public DbService(TestDbContext testDbContext) {
+        public TestingService(TestDbContext testDbContext) {
             this.TestDbContext = testDbContext;
         }
 

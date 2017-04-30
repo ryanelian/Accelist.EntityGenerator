@@ -18,13 +18,13 @@ namespace Accelist.EntityGenerator.ConsoleEfTest
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<TestDbContext>();
             dbContextOptionsBuilder.UseSqlServer(connectionString);
             var testDbContext = new TestDbContext(dbContextOptionsBuilder.Options);
-            var dbService = new DbService(testDbContext);
+            var testingService = new TestingService(testDbContext);
 
-            dbService.InsertTest();
-            dbService.SelectTest();
+            testingService.InsertTest();
+            testingService.SelectTest();
 
-            dbService.InsertTheNullable();
-            dbService.SelectTheNullable();
+            testingService.InsertTheNullable();
+            testingService.SelectTheNullable();
         }
     }
 }

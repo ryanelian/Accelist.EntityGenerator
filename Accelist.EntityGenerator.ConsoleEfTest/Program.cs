@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Accelist.EntityGenerator.ConsoleEfTest.Entities;
 using Accelist.EntityGenerator.ConsoleEfTest.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Accelist.EntityGenerator.ConsoleEfTest
 {
@@ -11,23 +14,17 @@ namespace Accelist.EntityGenerator.ConsoleEfTest
     {
         static void Main(string[] args)
         {
-            var insertService = new InsertService();
-            var updateService = new UpdateService();
-            var selectService = new SelectService();
+            var connectionString = ConfigurationManager.ConnectionStrings["TestDb"].ConnectionString;
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder<TestDbContext>();
+            dbContextOptionsBuilder.UseSqlServer(connectionString);
+            var testDbContext = new TestDbContext(dbContextOptionsBuilder.Options);
+            var dbService = new DbService(testDbContext);
 
-            insertService.InsertTest();
-            selectService.SelectTest();
+            dbService.InsertTest();
+            dbService.SelectTest();
 
-            insertService.InsertTheNullable();
-            selectService.SelectTheNullable();
-
-            updateService.UpdateTest();
-            selectService.SelectTest();
-
-            updateService.UpdateTheNullable();
-            selectService.SelectTheNullable();
-
-            Console.Read();
+            dbService.InsertTheNullable();
+            dbService.SelectTheNullable();
         }
     }
 }

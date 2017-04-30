@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Accelist.EntityGenerator.ConsoleEfTest.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Accelist.EntityGenerator.ConsoleEfTest.Services
 {
-    public class InsertService
+    public class DbService
     {
-        public TestDbContext TestDbContext = new TestDbContext();
+        public DbService(TestDbContext testDbContext) {
+            this.TestDbContext = testDbContext;
+        }
+
+        private readonly TestDbContext TestDbContext;
 
         public void InsertTest() {
             var randomBytes = new Random();
@@ -27,7 +33,7 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Services
                 TheDateTime2 = DateTime.Now,
                 TheDateTimeOffset = DateTimeOffset.Now,
                 TheDecimal = 10155.61M,
-                TheFloat = 203941.2145F,
+                TheFloat = 203941.2145,
                 TheGuid = Guid.NewGuid(),
                 TheMoney = 175000.50M,
                 TheNChar = "TheNChar",
@@ -79,6 +85,18 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Services
 
             this.TestDbContext.TheNullable.Add(newTheNullable);
             this.TestDbContext.SaveChanges();
+        }
+
+        public Test SelectTest()
+        {
+            var test = this.TestDbContext.Test.FirstOrDefault();
+            return test;
+        }
+
+        public TheNullable SelectTheNullable()
+        {
+            var theNullable = this.TestDbContext.TheNullable.FirstOrDefault();
+            return theNullable;
         }
     }
 }

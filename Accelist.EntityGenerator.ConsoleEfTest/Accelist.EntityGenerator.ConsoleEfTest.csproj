@@ -48,6 +48,9 @@
     <Compile Include="Entities\TheNullable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\InsertService.cs" />
+    <Compile Include="Services\SelectService.cs" />
+    <Compile Include="Services\UpdateService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

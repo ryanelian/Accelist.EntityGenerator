@@ -8,7 +8,9 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Entities
 {
     public class TestDbContext : DbContext
     {
-        public TestDbContext(DbContextOptions<TestDbContext> options) : base(options) { }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-UERRF7N\\SQLEXPRESS;Initial Catalog=AccelistEntityGenerator;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

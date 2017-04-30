@@ -7,6 +7,7 @@
 ### Getting Started
 
 - When running on Windows (WPF desktop application), have at least [.NET Framework 4.5.1](https://www.microsoft.com/en-us/download/details.aspx?id=53344).
+
 - [Click here to download latest build.](https://github.com/ryanelian/Accelist.EntityGenerator/raw/master/Dist/Accelist.EntityGenerator.Wpf.exe)
 
 ### Features
@@ -15,17 +16,11 @@
 - Most SQL server basic data types [are supported](https://github.com/ryanelian/Accelist.EntityGenerator/blob/master/Accelist.EntityGenerator/SqlTypeDictionary.cs): 
   
   - String-like types: `VARCHAR`, `CHAR`, `NVARCHAR`, `NCHAR`, `XML`
-  
   - Ordinal types: `BIGINT`, `INT`, `SMALLINT`, `TINYINT`, `BIT`
-  
   - Decimal types: `NUMERIC`, `DECIMAL`, `SMALLMONEY`, `MONEY`
-  
   - Floating-point types: `REAL`, `FLOAT`
-  
   - Blob types: `VARBINARY`, `BINARY`
-  
   - Date and time data structures: `DATETIMEOFFSET`, `SMALLDATETIME`, `DATETIME`, `DATETIME2`, `TIME`
-  
   - Unique types: `UNIQUEIDENTIFIER`, `ROWVERSION`, `TIMESTAMP`
 
 - Maps the type in accordance to appropriate C# data type. Provides null `?` hint for nullable columns.

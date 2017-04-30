@@ -21,7 +21,7 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Services
         public async Task Insert()
         {
             var randomBytes = new Random();
-            var bytes = new byte[8];
+            var bytes = new byte[64];
             randomBytes.NextBytes(bytes);
 
             var newTest = new Test
@@ -46,7 +46,7 @@ namespace Accelist.EntityGenerator.ConsoleEfTest.Services
                 TheSmallDateTime = DateTime.Now,
                 TheSmallInt = short.MaxValue,
                 TheSmallMoney = 21700.15M,
-                TheTime = TimeSpan.FromMinutes(1000),
+                TheTime = new TimeSpan(23, 59, 59),
                 TheTinyInt = byte.MaxValue,
                 TheVarBinary = bytes,
                 TheVarChar = "TheVarChar",

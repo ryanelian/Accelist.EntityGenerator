@@ -74,6 +74,7 @@ namespace Accelist.EntityGenerator.Wpf
                 }
 
                 MessageBox.Show($"Successfully generated entity models!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                FolderCheck();
             }
             finally
             {

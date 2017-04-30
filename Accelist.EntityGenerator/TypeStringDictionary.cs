@@ -45,6 +45,8 @@ namespace Accelist.EntityGenerator
                             renders.Add(typeof(byte[]), "byte[]");
                             renders.Add(typeof(Guid), "Guid");
                             renders.Add(typeof(Guid?), "Guid?");
+                            renders.Add(typeof(DateTimeOffset), "DateTimeOffset");
+                            renders.Add(typeof(DateTimeOffset?), "DateTimeOffset?");
                             renders.Add(typeof(DateTime), "DateTime");
                             renders.Add(typeof(DateTime?), "DateTime?");
                             renders.Add(typeof(TimeSpan), "TimeSpan");

@@ -55,6 +55,7 @@ namespace Accelist.EntityGenerator
                         Name = column.ColumnName,
                         DataType = EntityGenerator.TypeMapper.Translate(column.DataType, column.Nullable),
                         IsPrimaryKey = column.IsPrimaryKey,
+                        IsRowVersion = column.DataType == "rowversion" || column.DataType == "timestamp",
                     });
                 }
                 catch (KeyNotFoundException)
@@ -129,6 +130,10 @@ namespace {projectNamespace}.{EntityGenerator.EntitiesFolderName}
                 {
                     s = "        [Key]\r\n" + s;
                 }
+                if (property.IsRowVersion)
+                {
+                    s = "        [Timestamp]\r\n" + s;
+                }
                 return s;
             }).ToList();
 
@@ -143,6 +148,8 @@ namespace {projectNamespace}.{EntityGenerator.EntitiesFolderName}
         public string Name { set; get; }
 
         public bool IsPrimaryKey { set; get; }
+
+        public bool IsRowVersion { set; get; }
     }
 
 }
